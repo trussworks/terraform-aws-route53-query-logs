@@ -1,7 +1,7 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-Configures query logging on an existing Route53 hosted zones
+This module configures query logging on an existing Route53 hosted zone.
 **NOTE: AWS only supports sending Route53 logs in us-east-1 so we must create all the resources in that region.**
-Define a us-east-1 provider
+In order to use this module, you will need to define a `us-east-1` provider using the following code:
 
 ```hcl
 provider "aws" {
@@ -20,10 +20,11 @@ Creates the following resources:
 
 ```hcl
 module "r53_query_logging" {
-  source = "../../modules/aws-r53-query-logging"
+  source  = "trussworks/route53-query-logs/aws"
+  version = "~> 1.0.0"
 
   logs_cloudwatch_retention = 30
-  zone_id                   = "Z1234567890"
+  zone_id                   = "${aws_route53_zone.my_zone.zone_id}"
 }
 ```
 
