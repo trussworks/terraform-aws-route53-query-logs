@@ -16,11 +16,11 @@ func TestTerraformRoute53QueryLog(t *testing.T) {
 
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/simple")
 
-	// Give this S3 Bucket a unique ID for a name tag so we can distinguish it from any other Buckets provisioned
+	// Give this Route53 Zone a unique ID for a name tag so we can distinguish it from any other zones provisioned
 	// in your AWS account
 	testName := fmt.Sprintf("terratest-aws-route53-query-logs-%s", strings.ToLower(random.UniqueId()))
 	logGroupName := fmt.Sprintf("/aws/route53/%s.com.", testName)
-	logStreamName := "route53-test-log-stream"
+	// This _must_ be "us-east-1" unlike our other tests as Route53 query logs are _only_ available in us-east-1.
 	awsRegion := "us-east-1"
 
 	terraformOptions := &terraform.Options{
@@ -45,6 +45,9 @@ func TestTerraformRoute53QueryLog(t *testing.T) {
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
 
+	// Get Route53 Zone ID
+	zoneID := terraform.Output(t, terraformOptions, "route53_zone_id")
+
 	// This will get Cloudwatch Log messages given a region, log stream and log group
-	aws.GetCloudWatchLogEntries(t, awsRegion, logStreamName, logGroupName)
+	aws.GetCloudWatchLogEntries(t, awsRegion, zoneID, logGroupName)
 }
