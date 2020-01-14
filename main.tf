@@ -9,11 +9,6 @@ resource "aws_cloudwatch_log_group" "main" {
   retention_in_days = var.logs_cloudwatch_retention
 }
 
-resource "aws_cloudwatch_log_stream" "main" {
-  name           = var.zone_id
-  log_group_name = aws_cloudwatch_log_group.main.name
-}
-
 resource "aws_cloudwatch_log_resource_policy" "main" {
   provider = aws.us-east-1
 

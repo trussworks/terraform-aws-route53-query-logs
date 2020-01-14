@@ -9,6 +9,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTerraformRoute53QueryLog(t *testing.T) {
@@ -45,9 +46,6 @@ func TestTerraformRoute53QueryLog(t *testing.T) {
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
 
-	// Get Route53 Zone ID
-	zoneID := terraform.Output(t, terraformOptions, "route53_zone_id")
-
-	// This will get Cloudwatch Log messages given a region, log stream and log group
-	aws.GetCloudWatchLogEntries(t, awsRegion, zoneID, logGroupName)
+	// This will ensure the log stream is not empty
+	require.NotNil(t, aws.GetCloudWatchLogEntries(t, awsRegion, "route53-test-log-stream", logGroupName))
 }
