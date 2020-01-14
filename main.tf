@@ -10,8 +10,7 @@ resource "aws_cloudwatch_log_group" "main" {
 }
 
 resource "aws_cloudwatch_log_resource_policy" "main" {
-  provider = aws.us-east-1
-
+  provider        = aws.us-east-1
   policy_document = data.aws_iam_policy_document.main.json
   policy_name     = "route53-query-logging-policy-${var.zone_id}"
 }
