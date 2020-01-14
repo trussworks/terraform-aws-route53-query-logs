@@ -5,12 +5,13 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/aws"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
-func TestTerraformAwsS3PrivateBucket(t *testing.T) {
+func TestTerraformRoute53QueryLog(t *testing.T) {
 	t.Parallel()
 
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/simple")
@@ -18,6 +19,8 @@ func TestTerraformAwsS3PrivateBucket(t *testing.T) {
 	// Give this S3 Bucket a unique ID for a name tag so we can distinguish it from any other Buckets provisioned
 	// in your AWS account
 	testName := fmt.Sprintf("terratest-aws-route53-query-logs-%s", strings.ToLower(random.UniqueId()))
+	logGroupName := fmt.Sprintf("/aws/route53/%s.com.", testName)
+	logStreamName := "route53-test-log-stream"
 	awsRegion := "us-east-1"
 
 	terraformOptions := &terraform.Options{
@@ -41,4 +44,7 @@ func TestTerraformAwsS3PrivateBucket(t *testing.T) {
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
+
+	// This will get Cloudwatch Log messages given a region, log stream and log group
+	aws.GetCloudWatchLogEntries(t, awsRegion, logStreamName, logGroupName)
 }
