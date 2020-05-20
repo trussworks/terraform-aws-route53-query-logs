@@ -10,6 +10,7 @@ resource "aws_cloudwatch_log_group" "main" {
 }
 
 resource "aws_cloudwatch_log_resource_policy" "main" {
+  count = var.enable_resource_policy ? 1 : 0
   provider        = aws.us-east-1
   policy_document = data.aws_iam_policy_document.main.json
   policy_name     = "route53-query-logging-policy-${var.zone_id}"
@@ -32,6 +33,8 @@ data "aws_iam_policy_document" "main" {
 }
 
 resource "aws_route53_query_log" "main" {
+  // how do I change the depends_on to acknowledge the variable in an "if"-type clause?
+  // can I use an empty list here?
   depends_on               = [aws_cloudwatch_log_resource_policy.main]
   cloudwatch_log_group_arn = aws_cloudwatch_log_group.main.arn
   zone_id                  = var.zone_id
