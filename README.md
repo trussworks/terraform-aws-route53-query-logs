@@ -37,6 +37,12 @@ module "r53_query_logging" {
 * Terraform 0.11. Pin module version to ~> 1.0. Submit pull requests to `terraform011` branch.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
 ## Providers
 
 | Name | Version |
@@ -47,7 +53,8 @@ module "r53_query_logging" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
+| enable\_resource\_policy | n/a | `bool` | `true` | no |
 | logs\_cloudwatch\_retention | Specifies the number of days you want to retain log events in the log group. | `string` | `90` | no |
 | zone\_id | Route53 zone ID. | `string` | n/a | yes |
 

@@ -10,5 +10,6 @@ variable "zone_id" {
 }
 
 variable "enable_resource_policy" {
-  type = bool
+  type    = bool
+  default = true
 }

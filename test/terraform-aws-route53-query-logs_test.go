@@ -32,6 +32,7 @@ func TestTerraformRoute53QueryLog(t *testing.T) {
 		Vars: map[string]interface{}{
 			"logs_cloudwatch_retention": "30",
 			"zone_id":                   fmt.Sprintf("%s.com", testName),
+			"enable_resource_policy":    false,
 		},
 
 		// Environment variables to set when running Terraform
