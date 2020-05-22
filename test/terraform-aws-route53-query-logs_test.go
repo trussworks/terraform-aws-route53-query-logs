@@ -98,19 +98,4 @@ func TestTerraformRoute53QueryLogWithoutModuleResourcePolicy(t *testing.T) {
 	// This will ensure the log stream is not empty
 	logs := aws.GetCloudWatchLogEntries(t, awsRegion, "route53-test-log-stream", logGroupName)
 	require.NotNil(t, logs)
-
-	// Check if the resource policy is the provided by the test
-	cloudLogsClient := aws.NewCloudWatchLogsClient(t, awsRegion)
-	output, err := cloudLogsClient.DescribeResourcePolicies(&cloudwatchlogs.DescribeResourcePoliciesInput{})
-	policies := output.ResourcePolicies
-	require.NoError(t, err)
-	require.NotNil(t, policies)
-
-	containsTestPolicy := false
-	for _, policy := range policies {
-		if strings.Contains(*policy.PolicyName, "-test") {
-			containsTestPolicy = true
-		}
-	}
-	assert.True(t, containsTestPolicy)
 }
