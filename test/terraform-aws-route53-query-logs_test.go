@@ -5,16 +5,16 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
 	"github.com/gruntwork-io/terratest/modules/aws"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestTerraformRoute53QueryLog(t *testing.T) {
-	t.Parallel()
-
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/simple")
 
 	// Give this Route53 Zone a unique ID for a name tag so we can distinguish it from any other zones provisioned
@@ -49,12 +49,20 @@ func TestTerraformRoute53QueryLog(t *testing.T) {
 	// This will ensure the log stream is not empty
 	logs := aws.GetCloudWatchLogEntries(t, awsRegion, "route53-test-log-stream", logGroupName)
 	require.NotNil(t, logs)
-	fmt.Println(logs)
+
+	// Check if the resource policy is the provided by the module
+	cloudLogsClient := aws.NewCloudWatchLogsClient(t, awsRegion)
+	output, err := cloudLogsClient.DescribeResourcePolicies(&cloudwatchlogs.DescribeResourcePoliciesInput{})
+	policies := output.ResourcePolicies
+	require.NoError(t, err)
+	require.NotNil(t, policies)
+
+	for _, policy := range policies {
+		assert.NotContains(t, *policy.PolicyName, "-test")
+	}
 }
 
 func TestTerraformRoute53QueryLogWithDisabledResourcePolicy(t *testing.T) {
-	t.Parallel()
-
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/simple")
 
 	// Give this Route53 Zone a unique ID for a name tag so we can distinguish it from any other zones provisioned
@@ -90,5 +98,19 @@ func TestTerraformRoute53QueryLogWithDisabledResourcePolicy(t *testing.T) {
 	// This will ensure the log stream is not empty
 	logs := aws.GetCloudWatchLogEntries(t, awsRegion, "route53-test-log-stream", logGroupName)
 	require.NotNil(t, logs)
-	fmt.Println(logs)
+
+	// Check if the resource policy is the provided by the test
+	cloudLogsClient := aws.NewCloudWatchLogsClient(t, awsRegion)
+	output, err := cloudLogsClient.DescribeResourcePolicies(&cloudwatchlogs.DescribeResourcePoliciesInput{})
+	policies := output.ResourcePolicies
+	require.NoError(t, err)
+	require.NotNil(t, policies)
+
+	containsTestPolicy := false
+	for _, policy := range policies {
+		if strings.Contains(*policy.PolicyName, "-test") {
+			containsTestPolicy = true
+		}
+	}
+	assert.True(t, containsTestPolicy)
 }

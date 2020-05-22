@@ -2,7 +2,7 @@ resource "aws_route53_zone" "my_zone" {
   name = var.zone_id
 }
 
-data "aws_iam_policy_document" "main" {
+data "aws_iam_policy_document" "test" {
   count = var.enable_resource_policy ? 0 : 1
   statement {
     actions = [
@@ -19,11 +19,11 @@ data "aws_iam_policy_document" "main" {
   }
 }
 
-resource "aws_cloudwatch_log_resource_policy" "main" {
+resource "aws_cloudwatch_log_resource_policy" "test" {
   count           = var.enable_resource_policy ? 0 : 1
   provider        = aws.us-east-1
-  policy_document = data.aws_iam_policy_document.main[0].json
-  policy_name     = "route53-query-logging-policy-${var.zone_id}"
+  policy_document = data.aws_iam_policy_document.test[0].json
+  policy_name     = "route53-query-logging-policy-${var.zone_id}-test"
 }
 
 module "r53_query_logging" {

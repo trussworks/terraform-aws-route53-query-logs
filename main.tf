@@ -34,7 +34,6 @@ data "aws_iam_policy_document" "main" {
 }
 
 resource "aws_route53_query_log" "main" {
-  #depends_on               = var.enable_resource_policy ? [aws_cloudwatch_log_resource_policy[0].main] : []
   cloudwatch_log_group_arn = aws_cloudwatch_log_group.main.arn
   zone_id                  = var.zone_id
 }
