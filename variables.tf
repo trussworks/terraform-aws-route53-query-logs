@@ -9,7 +9,8 @@ variable "zone_id" {
   type        = string
 }
 
-variable "enable_resource_policy" {
-  type    = bool
-  default = true
+variable "create_resource_policy" {
+  type        = bool
+  description = "Specifies whether the module should create the resource policy."
+  default     = true
 }
