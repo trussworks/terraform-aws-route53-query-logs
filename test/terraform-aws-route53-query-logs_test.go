@@ -62,7 +62,7 @@ func TestTerraformRoute53QueryLog(t *testing.T) {
 	}
 }
 
-func TestTerraformRoute53QueryLogWithDisabledResourcePolicy(t *testing.T) {
+func TestTerraformRoute53QueryLogWithoutModuleResourcePolicy(t *testing.T) {
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/simple")
 
 	// Give this Route53 Zone a unique ID for a name tag so we can distinguish it from any other zones provisioned
