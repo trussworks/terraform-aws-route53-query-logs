@@ -41,27 +41,26 @@ module "r53_query_logging" {
 - Terraform 0.11. Pin module version to ~> 1.0. Submit pull requests to `terraform011` branch.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 ## Requirements
 
-| Name      | Version |
-| --------- | ------- |
+| Name | Version |
+|------|---------|
 | terraform | >= 0.12 |
 
 ## Providers
 
-| Name          | Version |
-| ------------- | ------- |
-| aws           | n/a     |
-| aws.us-east-1 | n/a     |
+| Name | Version |
+|------|---------|
+| aws | n/a |
+| aws.us-east-1 | n/a |
 
 ## Inputs
 
-| Name                      | Description                                                                  | Type     | Default | Required |
-| ------------------------- | ---------------------------------------------------------------------------- | -------- | ------- | :------: |
-| create_resource_policy    | Specifies whether the module should create the resource policy.              | `bool`   | `true`  |    no    |
-| logs_cloudwatch_retention | Specifies the number of days you want to retain log events in the log group. | `string` | `90`    |    no    |
-| zone_id                   | Route53 zone ID.                                                             | `string` | n/a     |   yes    |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| create\_resource\_policy | Specifies whether the module should create the resource policy. | `bool` | `true` | no |
+| logs\_cloudwatch\_retention | Specifies the number of days you want to retain log events in the log group. | `string` | `90` | no |
+| zone\_id | Route53 zone ID. | `string` | n/a | yes |
 
 ## Outputs
 
