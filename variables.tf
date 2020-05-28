@@ -8,3 +8,9 @@ variable "zone_id" {
   description = "Route53 zone ID."
   type        = string
 }
+
+variable "create_resource_policy" {
+  type        = bool
+  description = "Specifies whether the module should create the resource policy."
+  default     = true
+}

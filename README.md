@@ -1,5 +1,7 @@
 This module configures query logging on an existing Route53 hosted zone.
+
 **NOTE: AWS only supports sending Route53 logs in us-east-1 so we must create all the resources in that region.**
+
 In order to use this module, you will need to define a `us-east-1` provider using the following code:
 
 ```hcl
@@ -9,11 +11,13 @@ provider "aws" {
 }
 ```
 
+**ADDITIONAL NOTE: There is a limit of ten Cloudwatch log resource policies an AWS account can have in place. If you plan to have several instances of this module, it is recommended that only one should have `create_resource_policy` set to true and the others to false.**
+
 Creates the following resources:
 
-* CloudWatch log group for storing Route53 query logs
-* IAM Policy for allowing logs to be written
-* Route53 query logging service
+- CloudWatch log group for storing Route53 query logs
+- IAM Policy for allowing logs to be written
+- Route53 query logging service
 
 ## Usage
 
@@ -33,10 +37,16 @@ module "r53_query_logging" {
 
 ## Terraform Versions
 
-* Terraform 0.12. Pin module version to ~> 2.0. Submit pull requests to `master` branch.
-* Terraform 0.11. Pin module version to ~> 1.0. Submit pull requests to `terraform011` branch.
+- Terraform 0.12. Pin module version to ~> 2.0. Submit pull requests to `master` branch.
+- Terraform 0.11. Pin module version to ~> 1.0. Submit pull requests to `terraform011` branch.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
 ## Providers
 
 | Name | Version |
@@ -47,7 +57,8 @@ module "r53_query_logging" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
+| create\_resource\_policy | Specifies whether the module should create the resource policy. | `bool` | `true` | no |
 | logs\_cloudwatch\_retention | Specifies the number of days you want to retain log events in the log group. | `string` | `90` | no |
 | zone\_id | Route53 zone ID. | `string` | n/a | yes |
 
