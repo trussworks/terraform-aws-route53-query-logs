@@ -46,13 +46,14 @@ module "r53_query_logging" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| aws | ~> 2.70 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
-| aws.us-east-1 | n/a |
+| aws | ~> 2.70 |
+| aws.us-east-1 | ~> 2.70 |
 
 ## Inputs
 
