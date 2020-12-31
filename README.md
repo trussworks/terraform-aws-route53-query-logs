@@ -24,7 +24,7 @@ Creates the following resources:
 ```hcl
 module "r53_query_logging" {
   source  = "trussworks/route53-query-logs/aws"
-  version = "~> 2.0.0"
+  version = "~> 3.0.0"
 
   providers = {
     aws.us-east-1 = aws.us-east-1
@@ -37,7 +37,8 @@ module "r53_query_logging" {
 
 ## Terraform Versions
 
-- Terraform 0.12. Pin module version to ~> 2.0. Submit pull requests to `master` branch.
+- Terraform 0.13. Pin module version to ~> 3.0. Submit pull requests to `master` branch.
+- Terraform 0.12. Pin module version to ~> 2.0. Submit pull requests to `terraform012` branch.
 - Terraform 0.11. Pin module version to ~> 1.0. Submit pull requests to `terraform011` branch.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -45,15 +46,15 @@ module "r53_query_logging" {
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.12.0 |
-| aws | ~> 2.70 |
+| terraform | >= 0.13 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.70 |
-| aws.us-east-1 | ~> 2.70 |
+| aws | >= 3.0 |
+| aws.us-east-1 | >= 3.0 |
 
 ## Inputs
 

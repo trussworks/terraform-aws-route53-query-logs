@@ -1,4 +1,4 @@
 provider "aws" {
   alias   = "us-east-1"
-  version = "~> 2.70"
+  version = "~> 3.0"
 }
