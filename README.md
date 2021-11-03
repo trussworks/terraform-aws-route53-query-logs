@@ -1,5 +1,7 @@
 This module configures query logging on an existing Route53 hosted zone.
 
+
+
 **NOTE: AWS only supports sending Route53 logs in us-east-1 so we must create all the resources in that region.**
 
 In order to use this module, you will need to define a `us-east-1` provider using the following code:
