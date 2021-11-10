@@ -5,7 +5,7 @@ jobs:
         password: $DOCKER_PASSWORD
         username: $DOCKER_USERNAME
       image: trussworks/circleci:03d0d0dcd05dad6cc03b570e5128c735ea90c80f
-    parallelism: 3
+    parallelism: 2
     steps:
     - checkout
     - restore_cache:
