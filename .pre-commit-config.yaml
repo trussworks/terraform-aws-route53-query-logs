@@ -21,9 +21,3 @@ repos:
     hooks:
       - id: terraform_docs
       - id: terraform_fmt
-
-  - repo: https://github.com/golangci/golangci-lint
-    rev: v1.50.1
-    hooks:
-      - id: golangci-lint
-        args: [--timeout=3m]
