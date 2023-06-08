@@ -35,17 +35,12 @@ module "r53_query_logging" {
 }
 ```
 
-## Terraform Versions
-
-- Terraform 0.13 and newer. Pin module version to ~> 3.0. Submit pull requests to `master` branch.
-- Terraform 0.12. Pin module version to ~> 2.0. Submit pull requests to `terraform012` branch.
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
 
 ## Providers
